@@ -5,6 +5,7 @@ h3 {
 	//For one line titles
 	white-space: nowrap;
 	overflow: hidden;
+	text-align: center;
 	* {
 		display: inline;
 		white-space: nowrap;
@@ -14,12 +15,35 @@ h3 {
 	}
 }
 
-.AddWorkout {
+// .AddWorkout {
+// 	display: flex;
+// 	flex-direction: column;
+// }
+
+.form {
 	display: flex;
 	flex-direction: column;
-}
+	.ButtonWrapper {
+		display: flex;
+		width: 100%;
+		justify-content: center;
+		button {
+			padding: 5px 100px;
+		}
+	}
 
-.WorkoutSet {
-	display: flex;
-	justify-content: space-around;
+	input,
+	select {
+		color: #000;
+		margin: 0 auto;
+	}
+	tr {
+		border: 2px solid salmon;
+	}
+	option {
+		color: #333;
+	}
+	.AddSet {
+		margin: 0 auto;
+	}
 }

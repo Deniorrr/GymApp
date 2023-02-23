@@ -31,7 +31,7 @@ body {
 }
 
 .container {
-	max-width: 1000px;
+	width: min-content;
 	margin: 0 auto;
 	background-color: $base-color2;
 	-webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);

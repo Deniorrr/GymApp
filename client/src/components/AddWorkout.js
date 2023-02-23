@@ -23,12 +23,20 @@ function AddWorkout() {
 				>
 					Midday workout
 				</h3>
-				<WorkoutExercise />
-				<WorkoutExercise />
-				<WorkoutExercise />
-				<button>Add exercise</button>
-				<button>Cancel workout</button>
-				<button>End workout</button>
+				<div className="form">
+					<WorkoutExercise />
+					<WorkoutExercise />
+					<WorkoutExercise />
+					<div className="ButtonWrapper">
+						<button className="">Add exercise</button>
+					</div>
+					<div className="ButtonWrapper">
+						<button>Cancel workout</button>
+					</div>
+					<div className="ButtonWrapper">
+						<button>End workout</button>
+					</div>
+				</div>
 			</div>
 		</>
 	);
