@@ -7,3 +7,35 @@
 	font-family: "Work Sans", sans-serif;
 	color: #fff;
 }
+body {
+	background: linear-gradient(90deg, #a6a783, #fff);
+}
+
+.backButton {
+	border: none;
+	background-color: $base-color2;
+	border-radius: 15px;
+	margin-left: 60px;
+	padding: 10px;
+	transition-duration: 0.1s;
+	-webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+	-moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+	box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+	cursor: pointer;
+	img {
+		height: 40px;
+	}
+}
+.backButton:hover {
+	background-color: $base-color1;
+}
+
+.container {
+	max-width: 1000px;
+	margin: 0 auto;
+	background-color: $base-color2;
+	-webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+	-moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+	box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+	padding: 20px;
+}

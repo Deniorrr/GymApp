@@ -1,0 +1,25 @@
+button {
+	color: black;
+}
+h3 {
+	//For one line titles
+	white-space: nowrap;
+	overflow: hidden;
+	* {
+		display: inline;
+		white-space: nowrap;
+	}
+	br {
+		display: none;
+	}
+}
+
+.AddWorkout {
+	display: flex;
+	flex-direction: column;
+}
+
+.WorkoutSet {
+	display: flex;
+	justify-content: space-around;
+}

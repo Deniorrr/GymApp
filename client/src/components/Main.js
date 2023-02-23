@@ -9,8 +9,8 @@ function Main() {
 				<NavLink to="/profile">
 					<MainCard header="My Profile" subHeader="Overall informations" />
 				</NavLink>
-				<NavLink to="/ok">
-					<MainCard header="My Profile" subHeader="Overall informations" />
+				<NavLink to="/newWorkout">
+					<MainCard header="Add Workout" subHeader="Last workout: 1 day ago" />
 				</NavLink>
 				<NavLink to="/">
 					<MainCard header="My Profile" subHeader="Overall informations" />

@@ -11,7 +11,7 @@ function MainCard(props) {
 			</aside>
 			<article>
 				<h1>{props.header}</h1>
-				<h3>Overall informations</h3>
+				<h3>{props.subHeader}</h3>
 			</article>
 		</div>
 	);
