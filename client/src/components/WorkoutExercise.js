@@ -7,8 +7,13 @@ function WorkoutExercise(props) {
 		setSets([...sets, { id: setCount }], setSetCount(setCount + 1));
 	};
 	const renderSets = () => {
-		const elements = sets.map((set) => <WorkoutSet key={set.id} id={set.id} />);
+		const elements = sets.map((set) => (
+			<WorkoutSet key={set.id} id={set.id} deleteSet={(id) => deleteSet(id)} />
+		));
 		return elements;
+	};
+	const deleteSet = (id) => {
+		setSets(sets.filter((set) => set.id !== id));
 	};
 	return (
 		<>
@@ -25,6 +30,11 @@ function WorkoutExercise(props) {
 			</table>
 			<div className="AddSet">
 				<button onClick={() => addSet()}>Add set</button>
+			</div>
+			<div className="DeleteExercise">
+				<button onClick={() => props.deleteExercise(props.id)}>
+					Delete Exercise
+				</button>
 			</div>
 		</>
 	);

@@ -21,7 +21,7 @@ function WorkoutSet(props) {
 				</select>
 			</td>
 			<td>
-				<button>delete set</button>
+				<button onClick={() => props.deleteSet(props.id)}>delete set</button>
 			</td>
 			<td>
 				<button>Confirm set</button>

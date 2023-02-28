@@ -12,10 +12,16 @@ function AddWorkout() {
 			setExerciseCount(exerciseCount + 1)
 		);
 	};
-
+	const deleteExercise = (id) => {
+		setExercises(exercises.filter((exercise) => exercise.id !== id));
+	};
 	const renderExercises = () => {
 		const elements = exercises.map((exercise) => (
-			<WorkoutExercise key={exercise.id} id={exercise.id} />
+			<WorkoutExercise
+				key={exercise.id}
+				id={exercise.id}
+				deleteExercise={(id) => deleteExercise(id)}
+			/>
 		));
 		return elements;
 	};
