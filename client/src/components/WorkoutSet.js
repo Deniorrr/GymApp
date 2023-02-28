@@ -1,10 +1,10 @@
 import React from "react";
 
-function WorkoutSet() {
+function WorkoutSet(props) {
 	return (
 		<tr className="WorkoutSet">
 			<td className="weight">
-				<input type="number" placeholder="weight"></input>
+				<input type="number" placeholder={props.id}></input>
 			</td>
 			<td className="reps">
 				<input type="number" placeholder="reps"></input>

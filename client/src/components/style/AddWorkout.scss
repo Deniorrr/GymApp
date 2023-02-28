@@ -37,13 +37,27 @@ h3 {
 		color: #000;
 		margin: 0 auto;
 	}
-	tr {
-		border: 2px solid salmon;
-	}
 	option {
 		color: #333;
 	}
 	.AddSet {
 		margin: 0 auto;
+		button {
+			padding: 5px;
+			font-size: 20px;
+		}
+	}
+	td {
+		text-align: center;
+	}
+	.WorkoutSet > td {
+		padding: 10px;
+	}
+
+	.WorkoutSet:nth-child(even) {
+		background-color: #6b7283;
+	}
+	table {
+		border-collapse: collapse;
 	}
 }

@@ -1,40 +1,59 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import "./style/AddWorkout.scss";
 import BackButton from "./BackButton";
 import WorkoutExercise from "./WorkoutExercise";
 
 function AddWorkout() {
-	const editableTitle = useRef(null);
-
-	const handleKeyPress = (event) => {
-		if (event.key === "Enter") {
-			editableTitle.current.blur();
-		}
+	const [exercises, setExercises] = useState([]);
+	const [exerciseCount, setExerciseCount] = useState(0);
+	const addExercise = () => {
+		setExercises(
+			[...exercises, { id: exerciseCount, sets: {} }],
+			setExerciseCount(exerciseCount + 1)
+		);
 	};
-	//eslint-disable-next-line
+
+	const renderExercises = () => {
+		const elements = exercises.map((exercise) => (
+			<WorkoutExercise key={exercise.id} id={exercise.id} />
+		));
+		return elements;
+	};
+
+	// const editableTitle = useRef(null);
+
+	// const handleKeyPress = (event) => {
+	// 	if (event.key === "Enter") {
+	// 		editableTitle.current.blur();
+	// 	}
+	// };
+
+	const collectData = () => {
+		console.log(exercises);
+	};
 	return (
 		<>
 			<BackButton />
 			<div className="container AddWorkout">
 				<h3
-					ref={editableTitle}
-					contentEditable="true"
-					onKeyDown={handleKeyPress}
+				// ref={editableTitle}
+				// contentEditable="true"
+				// onKeyDown={handleKeyPress}
 				>
 					Midday workout
 				</h3>
 				<div className="form">
-					<WorkoutExercise />
-					<WorkoutExercise />
-					<WorkoutExercise />
+					{renderExercises()}
 					<div className="ButtonWrapper">
-						<button className="">Add exercise</button>
+						<button className="" onClick={() => addExercise()}>
+							Add exercise
+						</button>
 					</div>
 					<div className="ButtonWrapper">
 						<button>Cancel workout</button>
 					</div>
 					<div className="ButtonWrapper">
-						<button>End workout</button>
+						<button onClick={() => collectData()}>End workout</button>
 					</div>
 				</div>
 			</div>

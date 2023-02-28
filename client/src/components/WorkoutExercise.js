@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import WorkoutSet from "./WorkoutSet";
-function WorkoutExercise() {
+function WorkoutExercise(props) {
+	const [sets, setSets] = useState([{ id: 0 }]);
+	const [setCount, setSetCount] = useState(1);
+	const addSet = () => {
+		setSets([...sets, { id: setCount }], setSetCount(setCount + 1));
+	};
+	const renderSets = () => {
+		const elements = sets.map((set) => <WorkoutSet key={set.id} id={set.id} />);
+		return elements;
+	};
 	return (
 		<>
+			<h4>{props.id}</h4>
 			<table className="WorkoutExercise">
 				<tbody>
 					<tr>
@@ -10,13 +20,11 @@ function WorkoutExercise() {
 						<td className="weight">reps</td>
 						<td className="weight">RPE</td>
 					</tr>
-					<WorkoutSet />
-					<WorkoutSet />
-					<WorkoutSet />
+					{renderSets()}
 				</tbody>
 			</table>
 			<div className="AddSet">
-				<button>Add set</button>
+				<button onClick={() => addSet()}>Add set</button>
 			</div>
 		</>
 	);
