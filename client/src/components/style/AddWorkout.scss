@@ -67,6 +67,12 @@ h3 {
 	.WorkoutSet:nth-child(even) {
 		background-color: #6b7283;
 	}
+	.confirmed:nth-child(even) {
+		background-color: #1c7a44;
+	}
+	.confirmed:nth-child(odd) {
+		background-color: #14532f;
+	}
 	table {
 		border-collapse: collapse;
 	}
