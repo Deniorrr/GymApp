@@ -13,6 +13,7 @@ function WorkoutExercise(props) {
 				id={set.id}
 				deleteSet={(id) => deleteSet(id)}
 				onSave={(inputData, id) => addInputData(inputData, id)}
+				onDelete={(id) => deleteData(id)}
 			/>
 		));
 		return elements;
@@ -22,6 +23,9 @@ function WorkoutExercise(props) {
 	};
 	const addInputData = (inputData, id) => {
 		props.onSave(inputData, id, props.id);
+	};
+	const deleteData = (id) => {
+		props.deleteData(id, props.id);
 	};
 	return (
 		<>

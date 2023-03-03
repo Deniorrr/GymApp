@@ -8,25 +8,39 @@ function WorkoutSet(props) {
 	const switchConfirm = () => {
 		if (!confirmed) {
 			saveRecord();
+		} else {
+			deleteRecord();
 		}
 		setConfirmed(!confirmed);
 	};
 
 	const onChangeWeight = (e) => {
-		setConfirmed(false);
+		if (confirmed) {
+			setConfirmed(false);
+			deleteRecord();
+		}
 		setWeight(e.target.value);
 	};
 	const onChangeReps = (e) => {
-		setConfirmed(false);
+		if (confirmed) {
+			setConfirmed(false);
+			deleteRecord();
+		}
 		setReps(e.target.value);
 	};
 	const onChangeRpe = (e) => {
-		setConfirmed(false);
+		if (confirmed) {
+			setConfirmed(false);
+			deleteRecord();
+		}
 		setRpe(e.target.value);
 	};
 
 	const saveRecord = () => {
 		props.onSave({ weight, reps, rpe }, props.id);
+	};
+	const deleteRecord = () => {
+		props.onDelete(props.id);
 	};
 	return (
 		<tr className={"WorkoutSet " + (confirmed ? "confirmed" : "")}>
@@ -58,7 +72,14 @@ function WorkoutSet(props) {
 				</select>
 			</td>
 			<td>
-				<button onClick={() => props.deleteSet(props.id)}>delete set</button>
+				<button
+					onClick={() => {
+						props.deleteSet(props.id);
+						deleteRecord();
+					}}
+				>
+					delete set
+				</button>
 			</td>
 			<td>
 				<button onClick={() => switchConfirm()}>Confirm set</button>

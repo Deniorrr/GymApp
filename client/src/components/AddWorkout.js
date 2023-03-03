@@ -27,6 +27,21 @@ function AddWorkout() {
 				}
 			})
 		);
+		console.log("data added");
+	};
+	const deleteSet = (id, exerciseId) => {
+		let exerciseCopy = exercises.find((x) => x.id === exerciseId);
+		delete exerciseCopy.sets[id];
+		setExercises(
+			exercises.map((x) => {
+				if (x.id !== exerciseId) {
+					return x;
+				} else {
+					return exerciseCopy;
+				}
+			})
+		);
+		console.log("data deleted");
 	};
 	const renderExercises = () => {
 		const elements = exercises.map((exercise) => (
@@ -37,6 +52,9 @@ function AddWorkout() {
 				onSave={(inputData, id, exerciseId) =>
 					addInputData(inputData, id, exerciseId)
 				}
+				deleteData={(id, exerciseId) => {
+					deleteSet(id, exerciseId);
+				}}
 			/>
 		));
 		return elements;
