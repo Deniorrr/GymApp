@@ -2,13 +2,26 @@ import React, { useState } from "react";
 import "./style/AddWorkout.scss";
 import BackButton from "./BackButton";
 import WorkoutExercise from "./WorkoutExercise";
+import ExerciseSelector from "./ExerciseSelector";
 
 function AddWorkout() {
 	const [exercises, setExercises] = useState([]);
+	const [displayExerciseList, setDisplayExerciseList] = useState(false);
 	const [exerciseCount, setExerciseCount] = useState(0);
-	const addExercise = () => {
+	const displayExerciseSelector = () => {
+		setDisplayExerciseList(true);
+		//
+		// setExercises(
+		// 	[...exercises, { id: exerciseCount, sets: [] }],
+		// 	setExerciseCount(exerciseCount + 1)
+		// );
+	};
+	const closeExerciseSelector = () => {
+		setDisplayExerciseList(false);
+	};
+	const addExerciseToForm = (exercise) => {
 		setExercises(
-			[...exercises, { id: exerciseCount, sets: [] }],
+			[...exercises, { id: exerciseCount, sets: [], name: exercise.name }],
 			setExerciseCount(exerciseCount + 1)
 		);
 	};
@@ -48,6 +61,7 @@ function AddWorkout() {
 			<WorkoutExercise
 				key={exercise.id}
 				id={exercise.id}
+				name={exercise.name}
 				deleteExercise={(id) => deleteExercise(id)}
 				onSave={(inputData, id, exerciseId) =>
 					addInputData(inputData, id, exerciseId)
@@ -75,6 +89,12 @@ function AddWorkout() {
 		<>
 			<BackButton />
 			<div className="container AddWorkout">
+				{displayExerciseList && (
+					<ExerciseSelector
+						addExercise={(exercise) => addExerciseToForm(exercise)}
+						closeSelector={() => closeExerciseSelector()}
+					/>
+				)}
 				<h3
 				// ref={editableTitle}
 				// contentEditable="true"
@@ -85,7 +105,7 @@ function AddWorkout() {
 				<div className="form">
 					{renderExercises()}
 					<div className="ButtonWrapper">
-						<button className="" onClick={() => addExercise()}>
+						<button className="" onClick={() => displayExerciseSelector()}>
 							Add exercise
 						</button>
 					</div>

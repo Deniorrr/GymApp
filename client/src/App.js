@@ -22,16 +22,11 @@ function App() {
 
 export default App;
 
-// checklist:
-// design frontend
-// main App
-// 	Navbar
-// 		login/logout
-// 	My profile
-// 	History
-// 	Start Workout
-// 	measurments
-
-// create frontend
-// design backend
-// create backend
+// create small exercise database
+// select exercise while adding it
+// create custom layouts for different types of exercise
+// create register and login
+// design database
+// create register and login backend with password encrypting
+// add workout backend
+// view records

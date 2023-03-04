@@ -29,13 +29,13 @@ function WorkoutExercise(props) {
 	};
 	return (
 		<>
-			<h4>{props.id}</h4>
+			<h4>{props.name}</h4>
 			<table className="WorkoutExercise">
 				<tbody>
 					<tr>
 						<td className="weight">weight</td>
-						<td className="weight">reps</td>
-						<td className="weight">RPE</td>
+						<td className="reps">reps</td>
+						<td className="rpe">RPE</td>
 					</tr>
 					{renderSets()}
 				</tbody>
