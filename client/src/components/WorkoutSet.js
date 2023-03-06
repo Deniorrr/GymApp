@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import acceptIcon from "../assets/tickIcon.svg";
+import bin from "../assets/bin.png";
 
 function WorkoutSet(props) {
 	const [confirmed, setConfirmed] = useState(false);
@@ -78,11 +80,13 @@ function WorkoutSet(props) {
 						deleteRecord();
 					}}
 				>
-					delete set
+					<img src={bin} alt="Delete Set" />
 				</button>
 			</td>
 			<td>
-				<button onClick={() => switchConfirm()}>Confirm set</button>
+				<button onClick={() => switchConfirm()}>
+					<img src={acceptIcon} alt="Accept Set" />
+				</button>
 			</td>
 		</tr>
 	);

@@ -1,3 +1,5 @@
+@import "../../components/style/variables.scss";
+
 button {
 	color: black;
 }
@@ -75,5 +77,43 @@ h3 {
 	}
 	table {
 		border-collapse: collapse;
+	}
+	img {
+		height: 40px;
+	}
+}
+
+.selectorWrapper {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: #00000099;
+	display: grid;
+	place-items: center;
+	img {
+		height: 40px;
+	}
+	.exerciseSelector {
+		background-color: $base-color1;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		.buttonWrapper {
+			align-self: flex-end;
+		}
+		.exercise {
+			margin: 10px;
+			padding: 10px;
+			text-transform: uppercase;
+			display: flex;
+			align-items: center;
+			p {
+				flex-basis: 80%;
+				padding: 15px;
+			}
+			background-color: #386856;
+		}
 	}
 }
