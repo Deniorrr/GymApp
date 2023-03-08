@@ -75,6 +75,7 @@ function WorkoutSet(props) {
 			</td>
 			<td>
 				<button
+					className="redButton"
 					onClick={() => {
 						props.deleteSet(props.id);
 						deleteRecord();
@@ -84,7 +85,7 @@ function WorkoutSet(props) {
 				</button>
 			</td>
 			<td>
-				<button onClick={() => switchConfirm()}>
+				<button className="acceptButton" onClick={() => switchConfirm()}>
 					<img src={acceptIcon} alt="Accept Set" />
 				</button>
 			</td>

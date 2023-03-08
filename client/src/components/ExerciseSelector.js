@@ -4,7 +4,7 @@ import plusSymbol from "../assets/plusSymbol.png";
 function ExerciseSelector(props) {
 	const exercisesDatabase = [
 		{ key: 1, name: "Bench press", type: "free-weight" },
-		{ key: 2, name: "pull up", type: "bodyweight" },
+		{ key: 2, name: "Pull up", type: "bodyweight" },
 	];
 
 	const renderExerciseList = () => {
@@ -17,7 +17,7 @@ function ExerciseSelector(props) {
 						props.closeSelector();
 					}}
 				>
-					<img src={plusSymbol} />
+					<img src={plusSymbol} alt="Add" />
 				</button>
 			</div>
 		));

@@ -28,14 +28,14 @@ function WorkoutExercise(props) {
 		props.deleteData(id, props.id);
 	};
 	return (
-		<>
+		<div className="exercise">
 			<h4>{props.name}</h4>
 			<table className="WorkoutExercise">
 				<tbody>
 					<tr>
-						<td className="weight">weight</td>
-						<td className="reps">reps</td>
-						<td className="rpe">RPE</td>
+						<th className="weight">weight</th>
+						<th className="reps">reps</th>
+						<th className="rpe">RPE</th>
 					</tr>
 					{renderSets()}
 				</tbody>
@@ -44,11 +44,14 @@ function WorkoutExercise(props) {
 				<button onClick={() => addSet()}>Add set</button>
 			</div>
 			<div className="DeleteExercise">
-				<button onClick={() => props.deleteExercise(props.id)}>
+				<button
+					className="redButton"
+					onClick={() => props.deleteExercise(props.id)}
+				>
 					Delete Exercise
 				</button>
 			</div>
-		</>
+		</div>
 	);
 }
 
