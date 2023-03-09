@@ -3,19 +3,27 @@
 button {
 	color: black;
 }
-h3 {
-	text-align: center;
-	font-size: 30px;
+.AddWorkout {
+	h3 {
+		text-align: center;
+		font-size: 30px;
+	}
 }
 
 .form {
 	display: flex;
 	flex-direction: column;
+	button {
+		border-radius: 10px;
+	}
+	.acceptButton {
+		border: 3px solid $base-color1;
+	}
 	.exercise {
 		display: flex;
 		flex-direction: column;
 		border-left: 5px solid $base-color1;
-		margin: 20px;
+		margin: 30px;
 		h4 {
 			text-align: center;
 			font-size: 25px;
@@ -48,14 +56,10 @@ h3 {
 					color: #333;
 				}
 				button {
-					border-radius: 10px;
 					img {
 						height: 25px;
 						margin: 5px;
 					}
-				}
-				.acceptButton {
-					border: 3px solid $base-color1;
 				}
 			}
 			.WorkoutSet:nth-child(even) {
@@ -68,28 +72,18 @@ h3 {
 				background-color: #14532f;
 			}
 		}
-		.AddSet {
-			margin: 0 auto;
+		.exerciseButtons {
+			display: flex;
+			justify-content: center;
+			gap: 10px;
+			margin: 10px;
 			button {
-				padding: 5px;
 				font-size: 20px;
-				margin: 10px;
+				padding: 10px;
 			}
-		}
-		.DeleteExercise {
-			margin: 0 auto;
-			button {
-				padding: 5px;
-				font-size: 20px;
+			.addSetButton {
+				border: 3px solid $base-color1;
 			}
-		}
-	}
-	.ButtonWrapper {
-		display: flex;
-		width: 100%;
-		justify-content: center;
-		button {
-			padding: 5px 100px;
 		}
 	}
 
@@ -99,10 +93,28 @@ h3 {
 		border: 3px solid #720303;
 		border-radius: 10px;
 	}
+	.redButton:hover {
+		background-color: #db7979;
+	}
+	.bottomButtons {
+		display: flex;
+		flex-direction: column;
+		margin: 0 auto;
+		button {
+			font-size: 20px;
+			padding: 5px 15px;
+			margin: 5px;
+		}
+		.endWorkoutButton {
+			margin-top: 20px;
+			background-color: #96e2b7;
+			transform: scale(1.3);
+		}
+	}
 }
-
 .selectorWrapper {
 	position: fixed;
+	z-index: 2;
 	height: 100%;
 	width: 100%;
 	top: 0;
@@ -120,6 +132,10 @@ h3 {
 		flex-direction: column;
 		.buttonWrapper {
 			align-self: flex-end;
+			.closeButton {
+				background: none;
+				border: none;
+			}
 		}
 		.exercise {
 			margin: 10px;
@@ -131,6 +147,15 @@ h3 {
 			p {
 				flex-basis: 80%;
 				padding: 15px;
+			}
+			button {
+				background: $base-color1;
+				border: none;
+				border-radius: 10px;
+				padding: 5px;
+			}
+			button:hover {
+				background-color: #7ff1c7;
 			}
 		}
 	}

@@ -104,16 +104,22 @@ function AddWorkout() {
 				</h3>
 				<div className="form">
 					{renderExercises()}
-					<div className="ButtonWrapper">
-						<button className="" onClick={() => displayExerciseSelector()}>
+					<div className="bottomButtons">
+						<button
+							className="acceptButton"
+							onClick={() => displayExerciseSelector()}
+						>
 							Add exercise
 						</button>
-					</div>
-					<div className="ButtonWrapper">
-						<button>Cancel workout</button>
-					</div>
-					<div className="ButtonWrapper">
-						<button onClick={() => collectData()}>End workout</button>
+
+						<button className="redButton">Cancel workout</button>
+
+						<button
+							className="acceptButton endWorkoutButton"
+							onClick={() => collectData()}
+						>
+							End workout
+						</button>
 					</div>
 				</div>
 			</div>

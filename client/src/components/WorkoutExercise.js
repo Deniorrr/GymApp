@@ -40,16 +40,20 @@ function WorkoutExercise(props) {
 					{renderSets()}
 				</tbody>
 			</table>
-			<div className="AddSet">
-				<button onClick={() => addSet()}>Add set</button>
-			</div>
-			<div className="DeleteExercise">
-				<button
-					className="redButton"
-					onClick={() => props.deleteExercise(props.id)}
-				>
-					Delete Exercise
-				</button>
+			<div className="exerciseButtons">
+				<div className="DeleteExercise">
+					<button
+						className="redButton"
+						onClick={() => props.deleteExercise(props.id)}
+					>
+						Delete Exercise
+					</button>
+				</div>
+				<div>
+					<button className="addSetButton" onClick={() => addSet()}>
+						Add set
+					</button>
+				</div>
 			</div>
 		</div>
 	);
