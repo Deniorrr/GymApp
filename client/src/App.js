@@ -3,17 +3,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./components/Main";
 import Profile from "./components/Profile";
 import AddWorkout from "./components/AddWorkout";
+import Register from "./components/Register";
+import Login from "./components/Login";
 import "./App.scss";
 
 function App() {
 	return (
 		<div>
-			<Navbar />
 			<BrowserRouter>
 				<Routes>
-					<Route path="/" element={<Main />} />
-					<Route path="profile" element={<Profile />} />
-					<Route path="newWorkout" element={<AddWorkout />} />
+					<Route path="/" element={<Navbar />}>
+						<Route path="/" element={<Main />} />
+						<Route path="profile" element={<Profile />} />
+						<Route path="newWorkout" element={<AddWorkout />} />
+					</Route>
+					<Route path="register" element={<Register />} />
+					<Route path="login" element={<Login />} />
 				</Routes>
 			</BrowserRouter>
 		</div>
