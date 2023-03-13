@@ -1,0 +1,74 @@
+@import "../../components/style/variables.scss";
+
+#registerPanel {
+	padding: 0;
+	display: flex;
+	border-radius: 20px;
+	aside {
+		padding: 20px;
+		background-color: #777777cc;
+		border-radius: 20px 0 0 20px;
+		.logo {
+			display: flex;
+			align-items: center;
+			img {
+				height: 60px;
+				transform: scaleX(-1);
+			}
+			h1 {
+				font-size: 2.3em;
+				margin: 0 20px;
+			}
+		}
+		figure {
+			padding: 30px;
+			img {
+				height: 300px;
+			}
+		}
+		.caption {
+			text-align: center;
+			font-size: 18px;
+		}
+	}
+	main {
+		padding: 60px;
+
+		h2 {
+			font-size: 1.6em;
+		}
+		#loginLink {
+			padding: 20px 0;
+			color: #aaa;
+			display: flex;
+			a {
+				color: $base-color1;
+				text-decoration: underline;
+				margin-left: 0.5rem;
+			}
+		}
+		.form {
+			input {
+				border: 3px solid $base-color1;
+				color: #000;
+				font-size: 18px;
+				margin-bottom: 20px;
+				padding: 0.3em;
+				border-radius: 10px;
+			}
+			button {
+				background-color: $base-color1;
+				width: 100%;
+				font-size: 20px;
+				padding: 10px;
+				margin-top: 25px;
+				color: #fff;
+				border: none;
+				border-radius: 10px;
+			}
+			button:hover {
+				background-color: #61b999;
+			}
+		}
+	}
+}

@@ -5,7 +5,7 @@ import "./style/Main.scss";
 function Main() {
 	return (
 		<>
-			<main>
+			<main className="home">
 				<NavLink to="/profile">
 					<MainCard header="My Profile" subHeader="Overall informations" />
 				</NavLink>

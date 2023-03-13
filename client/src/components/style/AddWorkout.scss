@@ -8,85 +8,84 @@ button {
 		text-align: center;
 		font-size: 30px;
 	}
-}
 
-.form {
-	display: flex;
-	flex-direction: column;
-	button {
-		border-radius: 10px;
-	}
-	.acceptButton {
-		border: 3px solid $base-color1;
-	}
-	.exercise {
+	.form {
 		display: flex;
 		flex-direction: column;
-		border-left: 5px solid $base-color1;
-		margin: 30px;
-		h4 {
-			text-align: center;
-			font-size: 25px;
-			text-transform: uppercase;
-			background-color: #6b7283;
+		button {
+			border-radius: 10px;
 		}
-		table {
-			border-collapse: collapse;
-			th {
-				text-transform: uppercase;
-				padding: 10px;
-				font-size: 20px;
-			}
-			td {
-				padding: 10px;
+		.acceptButton {
+			border: 3px solid $base-color1;
+		}
+		.exercise {
+			display: flex;
+			flex-direction: column;
+			border-left: 5px solid $base-color1;
+			margin: 30px;
+			h4 {
 				text-align: center;
-				input,
-				select {
-					color: #000;
-					margin: 0 auto;
-					font-size: 20px;
-					border: 3px solid $base-color1;
-					border-radius: 10px;
-					padding: 5px;
-				}
-				input[type="number"] {
-					width: 4em;
-				}
-				option {
-					color: #333;
-				}
-				button {
-					img {
-						height: 25px;
-						margin: 5px;
-					}
-				}
-			}
-			.WorkoutSet:nth-child(even) {
+				font-size: 25px;
+				text-transform: uppercase;
 				background-color: #6b7283;
 			}
-			.confirmed:nth-child(even) {
-				background-color: #1c7a44;
+			table {
+				border-collapse: collapse;
+				th {
+					text-transform: uppercase;
+					padding: 10px;
+					font-size: 20px;
+				}
+				td {
+					padding: 10px;
+					text-align: center;
+					input,
+					select {
+						color: #000;
+						margin: 0 auto;
+						font-size: 20px;
+						border: 3px solid $base-color1;
+						border-radius: 10px;
+						padding: 5px;
+					}
+					input[type="number"] {
+						width: 4em;
+					}
+					option {
+						color: #333;
+					}
+					button {
+						img {
+							height: 25px;
+							margin: 5px;
+						}
+					}
+				}
+				.WorkoutSet:nth-child(even) {
+					background-color: #6b7283;
+				}
+				.confirmed:nth-child(even) {
+					background-color: #1c7a44;
+				}
+				.confirmed:nth-child(odd) {
+					background-color: #14532f;
+				}
 			}
-			.confirmed:nth-child(odd) {
-				background-color: #14532f;
-			}
-		}
-		.exerciseButtons {
-			display: flex;
-			justify-content: center;
-			gap: 10px;
-			margin: 10px;
-			button {
-				font-size: 20px;
-				padding: 10px;
-			}
-			.addSetButton {
-				border: 3px solid $base-color1;
+			.exerciseButtons {
+				display: flex;
+				justify-content: center;
+				gap: 10px;
+				margin: 10px;
+				button {
+					font-size: 20px;
+					padding: 10px;
+				}
+				.addSetButton {
+					border: 3px solid $base-color1;
+				}
 			}
 		}
 	}
-
 	.redButton {
 		color: #720303;
 		background-color: #e79696;
