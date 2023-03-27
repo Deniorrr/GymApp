@@ -21,7 +21,7 @@
 			}
 		}
 		figure {
-			padding: 30px;
+			padding: 50px;
 			img {
 				height: 300px;
 			}
@@ -37,7 +37,8 @@
 		h2 {
 			font-size: 1.6em;
 		}
-		#loginLink {
+		#loginLink,
+		#registerLink {
 			padding: 20px 0;
 			color: #aaa;
 			display: flex;

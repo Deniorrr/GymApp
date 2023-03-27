@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
-import ok from "../assets/undraw2.svg";
+import Undraw_image from "../assets/undraw2.svg";
 import "./style/Register.scss";
 function Register() {
 	return (
@@ -12,7 +12,7 @@ function Register() {
 					<h1>Gym App</h1>
 				</div>
 				<figure>
-					<img src={ok} />
+					<img src={Undraw_image} alt="stock Image" />
 				</figure>
 				<p className="caption">Start documenting your progress today!</p>
 			</aside>
