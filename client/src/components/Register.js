@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Undraw_image from "../assets/undraw2.svg";
+import axios from "axios";
 import "./style/Register.scss";
 function Register() {
+	const [username, setUsername] = useState("");
+	const [email, setEmail] = useState("email");
+	const [password, setPassword] = useState("password");
+
+	const submitForm = () => {
+		axios
+			.post("http://localhost:3001/register", {
+				username: username,
+				email: email,
+				password: password,
+			})
+			.then((response) => {
+				console.log(response);
+			});
+	};
 	return (
 		<div className="container" id="registerPanel">
 			<aside>
@@ -12,7 +28,7 @@ function Register() {
 					<h1>Gym App</h1>
 				</div>
 				<figure>
-					<img src={Undraw_image} alt="stock Image" />
+					<img src={Undraw_image} alt="People exercising" />
 				</figure>
 				<p className="caption">Start documenting your progress today!</p>
 			</aside>
@@ -22,21 +38,39 @@ function Register() {
 					Already registered? <NavLink to="/profile"> Log In</NavLink>
 				</p>
 				<div className="form">
-					<label for="nickname">
-						<p>Nickname</p>
+					<label htmlFor="username">
+						<p>Username</p>
 					</label>
-					<input type="text" id="nickname" />
+					<input
+						type="text"
+						id="username"
+						onChange={(e) => {
+							setUsername(e.target.value);
+						}}
+					/>
 
-					<label for="email">
+					<label htmlFor="email">
 						<p>Email address</p>
 					</label>
-					<input type="email" id="email" />
+					<input
+						type="email"
+						id="email"
+						onChange={(e) => {
+							setEmail(e.target.value);
+						}}
+					/>
 
-					<label for="password">
+					<label htmlFor="password">
 						<p>Password</p>
 					</label>
-					<input type="password" id="password" />
-					<button>Register</button>
+					<input
+						type="password"
+						id="password"
+						onChange={(e) => {
+							setPassword(e.target.value);
+						}}
+					/>
+					<button onClick={() => submitForm()}>Register</button>
 				</div>
 			</main>
 		</div>

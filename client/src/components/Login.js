@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Undraw_image from "../assets/undraw1.svg";
 import "./style/Register.scss";
 function Login() {
+	const [username, setUsername] = useState("username");
 	return (
 		<div className="container" id="registerPanel">
 			<aside>
@@ -12,7 +13,7 @@ function Login() {
 					<h1>Gym App</h1>
 				</div>
 				<figure>
-					<img src={Undraw_image} alt="stock Image" />
+					<img src={Undraw_image} alt="Mobile phone" />
 				</figure>
 				<p className="caption">Soon on mobile!</p>
 			</aside>
@@ -22,10 +23,16 @@ function Login() {
 					No account?<NavLink to="/profile"> Register</NavLink>
 				</p>
 				<div className="form">
-					<label for="nickname">
-						<p>Nickname</p>
+					<label htmlFor="username">
+						<p>Username</p>
 					</label>
-					<input type="text" id="nickname" />
+					<input
+						type="text"
+						id="username"
+						onChange={(e) => {
+							setUsername(e.target.value);
+						}}
+					/>
 
 					<label for="password">
 						<p>Password</p>
