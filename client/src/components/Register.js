@@ -6,8 +6,8 @@ import axios from "axios";
 import "./style/Register.scss";
 function Register() {
 	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("email");
-	const [password, setPassword] = useState("password");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
 	const submitForm = () => {
 		axios

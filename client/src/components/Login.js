@@ -4,7 +4,19 @@ import logo from "../assets/logo.png";
 import Undraw_image from "../assets/undraw1.svg";
 import "./style/Register.scss";
 function Login() {
-	const [username, setUsername] = useState("username");
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+
+	const submitForm = () => {
+		axios
+			.post("http://localhost:3001/login", {
+				username: username,
+				password: password,
+			})
+			.then((response) => {
+				console.log(response);
+			});
+	};
 	return (
 		<div className="container" id="registerPanel">
 			<aside>
@@ -37,7 +49,12 @@ function Login() {
 					<label for="password">
 						<p>Password</p>
 					</label>
-					<input type="password" id="password" />
+					<input 
+						type="password" 
+						id="password" 
+						onChange={(e) => {
+							setPassword(e.target.value);
+						}}/>
 					<button>Login</button>
 				</div>
 			</main>
