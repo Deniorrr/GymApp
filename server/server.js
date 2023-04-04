@@ -10,33 +10,56 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 const db = mysql.createPool({
-	host: "localhost",
-	user: "root",
-	password: "",
-	database: "gymapp",
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "gymapp",
 });
 
 app.get("/", (req, res) => {
-	res.send("<h2>hi</h2>");
+  res.send("<h2>hi</h2>");
 });
 
-app.post("/register", (req, res) => {
-	// try {
-	// 	const hashedPassword = await bcrypt.hash(req.body.password, 10);
-	// } catch {}
-	const username = req.body.username;
-	const email = req.body.email;
-	const password = req.body.password;
-	const sqlInsert =
-		"INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES (NULL, ?, ?, ?);";
-	db.query(sqlInsert, [username, email, password], (err, result) => {
-		console.log(err);
-		res.send("good");
-	});
+app.get("/redirect", (req, res) => {
+  res.redirect("https://example.com");
+});
+
+app.post("/register", async (req, res) => {
+  try {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    // console.log(salt);
+    // console.log(hashedPassword);
+    const username = req.body.username;
+    const email = req.body.email;
+    const sqlInsert =
+      "INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES (NULL, ?, ?, ?);";
+    db.query(sqlInsert, [username, email, hashedPassword], (err, result) => {
+      res.status(201).send("ok");
+    });
+  } catch {
+    res.status(500).send("error has occured");
+  }
 });
 
 app.post("/login", async (req, res) => {
-	//const
+  const username = req.body.username;
+  const sqlSelect = "SELECT * FROM users WHERE username = ?";
+  db.query(sqlSelect, [username], async (err, result) => {
+    if (result.length == 0) {
+      return res.send("This username does not exist");
+    }
+    const hashedPassword = result[0].password;
+    try {
+      if (await bcrypt.compare(req.body.password, hashedPassword)) {
+        res.send("Successful login");
+      } else {
+        res.send("Wrong password");
+      }
+    } catch {
+      res.status(500).send("error has occured");
+    }
+  });
 });
 
 app.listen(3001);

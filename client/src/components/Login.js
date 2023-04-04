@@ -15,7 +15,8 @@ function Login() {
         password: password,
       })
       .then((response) => {
-        console.log(response);
+        console.log(response.status);
+        console.log(response.data);
       });
   };
   return (
@@ -46,7 +47,7 @@ function Login() {
               setUsername(e.target.value);
             }}
           />
-          <label for="password">
+          <label htmlFor="password">
             <p>Password</p>
           </label>
           <input

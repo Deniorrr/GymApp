@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Undraw_image from "../assets/undraw2.svg";
 import axios from "axios";
 import "./style/Register.scss";
+
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const submitForm = () => {
     axios
       .post("http://localhost:3001/register", {
@@ -17,7 +18,10 @@ function Register() {
         password: password,
       })
       .then((response) => {
-        console.log(response);
+        if (response.data === "ok") navigate("/login");
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
   return (
