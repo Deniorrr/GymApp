@@ -9,6 +9,7 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [requestError, setRequestError] = useState(false);
   const navigate = useNavigate();
   const submitForm = () => {
     axios
@@ -18,11 +19,20 @@ function Register() {
         password: password,
       })
       .then((response) => {
-        if (response.data === "ok") navigate("/login");
+        if (response.data.error == undefined) {
+          navigate("/login");
+        } else {
+          setRequestError(response.data.error);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+  const renderError = () => {
+    if (requestError) {
+      return <div id="error">{requestError}</div>;
+    }
   };
   return (
     <div className="container" id="registerPanel">
@@ -39,8 +49,9 @@ function Register() {
       <main>
         <h2>Register</h2>
         <p id="loginLink">
-          Already registered? <NavLink to="/profile"> Log In</NavLink>
+          Already registered? <NavLink to="/login"> Log In</NavLink>
         </p>
+        {renderError()}
         <div className="form">
           <label htmlFor="username">
             <p>Username</p>

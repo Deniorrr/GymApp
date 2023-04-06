@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Undraw_image from "../assets/undraw1.svg";
 import axios from "axios";
@@ -7,7 +7,8 @@ import "./style/Register.scss";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [requestError, setRequestError] = useState(false);
+  const navigate = useNavigate();
   const submitForm = () => {
     axios
       .post("http://localhost:3001/login", {
@@ -15,9 +16,18 @@ function Login() {
         password: password,
       })
       .then((response) => {
-        console.log(response.status);
-        console.log(response.data);
+        if (response.data.error == undefined) {
+          navigate("/");
+        } else {
+          setRequestError(response.data.error);
+        }
       });
+  };
+
+  const renderError = () => {
+    if (requestError) {
+      return <div id="error">{requestError}</div>;
+    }
   };
   return (
     <div className="container" id="registerPanel">
@@ -34,8 +44,9 @@ function Login() {
       <main>
         <h2>Login</h2>
         <p id="registerLink">
-          No account?<NavLink to="/profile"> Register</NavLink>
+          No account?<NavLink to="/register"> Register</NavLink>
         </p>
+        {renderError()}
         <div className="form">
           <label htmlFor="username">
             <p>Username</p>

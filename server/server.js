@@ -32,11 +32,36 @@ app.post("/register", async (req, res) => {
     // console.log(hashedPassword);
     const username = req.body.username;
     const email = req.body.email;
-    const sqlInsert =
-      "INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES (NULL, ?, ?, ?);";
-    db.query(sqlInsert, [username, email, hashedPassword], (err, result) => {
-      res.status(201).send("ok");
-    });
+    if (username.length < 3) {
+      res.send({ error: "Username must contain at least 3 characters" });
+    } else if (req.body.password.length < 3) {
+      res.send({ error: "Password must contain at least 3 characters" });
+    } else if (email.indexOf("@") == -1) {
+      res.send({ error: "Incorrect email" });
+    } else {
+      const sqlSelect = "SELECT * FROM users WHERE username = ? OR email = ?";
+      db.query(sqlSelect, [username, email], (err, result) => {
+        if (result.length > 0) {
+          console.log(result);
+          if (result[0].username == username) {
+            res.send({ error: "Username is taken!" });
+          } else {
+            res.send({ error: "Email adress is already registered!" });
+          }
+        } else {
+          const sqlInsert =
+            "INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES (NULL, ?, ?, ?);";
+          db.query(
+            sqlInsert,
+            [username, email, hashedPassword],
+            (err, result) => {
+              console.log("not taken");
+              res.status(201).send("ok");
+            }
+          );
+        }
+      });
+    }
   } catch {
     res.status(500).send("error has occured");
   }
@@ -47,14 +72,14 @@ app.post("/login", async (req, res) => {
   const sqlSelect = "SELECT * FROM users WHERE username = ?";
   db.query(sqlSelect, [username], async (err, result) => {
     if (result.length == 0) {
-      return res.send("This username does not exist");
+      return res.send({ error: "This username does not exist!" });
     }
     const hashedPassword = result[0].password;
     try {
       if (await bcrypt.compare(req.body.password, hashedPassword)) {
         res.send("Successful login");
       } else {
-        res.send("Wrong password");
+        res.send({ error: "Wrong password!" });
       }
     } catch {
       res.status(500).send("error has occured");

@@ -1,31 +1,56 @@
 @import "./variables.scss";
 
+$logout1: url("../../assets/logout1.png");
+$logout2: url("../../assets/logout2.png");
+
 nav {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	background: $base-gradient2;
-	margin-bottom: 60px;
-	height: 70px;
-	color: #fff;
-	display: flex;
-	align-items: center;
-	-webkit-box-shadow: 0px 5px 24px 0px rgba(66, 68, 90, 1);
-	-moz-box-shadow: 0px 5px 24px 0px rgba(66, 68, 90, 1);
-	box-shadow: 0px 5px 24px 0px rgba(66, 68, 90, 1);
-	aside {
-		font-size: 2.3em;
-		display: flex;
-		align-items: center;
-		img {
-			height: 60px;
-			transform: scaleX(-1);
-		}
-		h1 {
-			margin: 0 20px;
-		}
-	}
-	ul {
-		display: flex;
-	}
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: $base-gradient2;
+  margin-bottom: 60px;
+  height: 70px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  -webkit-box-shadow: 0px 5px 24px 0px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 0px 5px 24px 0px rgba(66, 68, 90, 1);
+  box-shadow: 0px 5px 24px 0px rgba(66, 68, 90, 1);
+  aside {
+    font-size: 2.3em;
+    display: flex;
+    align-items: center;
+    img {
+      height: 60px;
+      transform: scaleX(-1);
+    }
+    h1 {
+      margin: 0 20px;
+    }
+  }
+  #logout {
+    height: 100%;
+    padding: 10px;
+    button {
+      border: none;
+      background-color: #ffffff00;
+      background-image: $logout1;
+      background-repeat: no-repeat;
+      // background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      height: 100%;
+      img {
+        height: 100%;
+        opacity: 0;
+      }
+    }
+    button:hover {
+      background-image: $logout2;
+    }
+  }
+  // ul {
+  // 	display: flex;
+  // }
 }
