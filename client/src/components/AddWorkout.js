@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style/AddWorkout.scss";
 import BackButton from "./BackButton";
 import WorkoutExercise from "./WorkoutExercise";
 import ExerciseSelector from "./ExerciseSelector";
+import axios from "axios";
 
 function AddWorkout() {
 	const [exercises, setExercises] = useState([]);
 	const [displayExerciseList, setDisplayExerciseList] = useState(false);
 	const [exerciseCount, setExerciseCount] = useState(0);
+	const [exerciseList, setExerciseList] = useState([])
 	const displayExerciseSelector = () => {
 		setDisplayExerciseList(true);
 		//
@@ -16,6 +18,23 @@ function AddWorkout() {
 		// 	setExerciseCount(exerciseCount + 1)
 		// );
 	};
+
+	
+	const getExercisesFromDB = ()=>{
+		axios.post("http://localhost:3001/getexercises", {
+			userUuid: localStorage.getItem("uuid"),
+			workoutData: exercises
+		}).then((response) => {
+			response.data.forEach(x=>{
+				console.log({key: x.id, name: x.name});
+				setExerciseList(y=>[...y, {key: x.id, name: x.name}])
+				//exerciseList.push({key: x.id, name: x.name})
+			})
+		})
+	};
+	useEffect(()=>{
+		getExercisesFromDB();
+	}, [])
 	const closeExerciseSelector = () => {
 		setDisplayExerciseList(false);
 	};
@@ -81,9 +100,25 @@ function AddWorkout() {
 	// 		editableTitle.current.blur();
 	// 	}
 	// };
+	const userId = 0;
 
-	const collectData = () => {
+	const submitData = () => {
+		axios.post("http://localhost:3001/addworkout", {
+			userId: userId,//potem ssid
+			workoutData: exercises
+		})
+		// .then((response) => {
+		// 	if (response.data.error == undefined) {
+		// 		navigate("/login");
+		// 	} else {
+		// 		setRequestError(response.data.error);
+		// 	}
+		// })
+		// .catch((error) => {
+		// 	console.log(error);
+		// });
 		console.log(exercises);
+
 	};
 	return (
 		<>
@@ -93,6 +128,7 @@ function AddWorkout() {
 					<ExerciseSelector
 						addExercise={(exercise) => addExerciseToForm(exercise)}
 						closeSelector={() => closeExerciseSelector()}
+						exerciseList={exerciseList}
 					/>
 				)}
 				<h3
@@ -116,7 +152,7 @@ function AddWorkout() {
 
 						<button
 							className="acceptButton endWorkoutButton"
-							onClick={() => collectData()}
+							onClick={() => submitData()}
 						>
 							End workout
 						</button>

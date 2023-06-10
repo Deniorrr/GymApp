@@ -4,6 +4,24 @@ const bcrypt = require("bcrypt");
 const mysql = require("mysql");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const { v4: uuidv4 } = require("uuid");
+
+class UserSession {
+  constructor(uuid, nickname, userid) {
+    this.uuid = uuid;
+    this.nickname = nickname;
+    this.userid = userid;
+  }
+}
+
+let userSessionActive = [];
+
+const getUserId = (_uuid)=>{
+  userSessionActive.forEach(x =>{
+    if(x.uuid== _uuid) return x.userId
+    return false;
+  })
+}
 
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
@@ -28,8 +46,6 @@ app.post("/register", async (req, res) => {
   try {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    // console.log(salt);
-    // console.log(hashedPassword);
     const username = req.body.username;
     const email = req.body.email;
     if (username.length < 3) {
@@ -77,7 +93,11 @@ app.post("/login", async (req, res) => {
     const hashedPassword = result[0].password;
     try {
       if (await bcrypt.compare(req.body.password, hashedPassword)) {
-        res.send("Successful login");
+        const user_id = result[0].id;
+        const username = result[0].username;
+        const uuid = uuidv4();
+        userSessionActive.push(new UserSession(uuid, username, user_id));
+        res.send(["Successful login", uuid]);
       } else {
         res.send({ error: "Wrong password!" });
       }
@@ -85,6 +105,28 @@ app.post("/login", async (req, res) => {
       res.status(500).send("error has occured");
     }
   });
+});
+
+app.post("/addworkout", async (req, res) => {
+  const userId = req.body.userId;
+  const exercises = req.body.workoutData;
+  console.log(exercises);
+});
+
+app.post("/getexercises", async(req, res)=>{
+  const userId = getUserId(req.body.uuid);
+  const sqlSelect = "SELECT id, name FROM workout_exercises WHERE user_id = 0 OR user_id = ?";
+  db.query(sqlSelect, [userId], async (err, result)=>{
+    console.log(result)
+    res.send(result)
+  })
+})
+
+app.post("active", (req, res) => {
+  const uuid = req.body.uuid;
+  const pos = userSessionActive.findIndex((i) => i.uuid === uuid);
+  console.log(pos);
+  res.send({ error: "Session doesn't exist" });
 });
 
 app.listen(3001);

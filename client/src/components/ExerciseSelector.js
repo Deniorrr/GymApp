@@ -2,12 +2,10 @@ import React from "react";
 import closeIcon from "../assets/closeIcon.svg";
 import plusSymbol from "../assets/plusSymbol.png";
 function ExerciseSelector(props) {
-	const exercisesDatabase = [
-		{ key: 1, name: "Bench press", type: "free-weight" },
-		{ key: 2, name: "Pull up", type: "bodyweight" },
-	];
+	const exercisesDatabase = props.exerciseList;
 
 	const renderExerciseList = () => {
+		console.log(props.exerciseList)
 		const exerciseList = exercisesDatabase.map((exercise) => (
 			<div className="exercise" key={exercise.key}>
 				<p>{exercise.name}</p>

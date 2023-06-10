@@ -71,6 +71,7 @@ function WorkoutSet(props) {
 					<option value="8">8</option>
 					<option value="7.5">7.5</option>
 					<option value="7">7</option>
+					<option value="<7">&lt; 7</option>
 				</select>
 			</td>
 			<td>

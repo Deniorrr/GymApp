@@ -17,6 +17,8 @@ function Login() {
       })
       .then((response) => {
         if (response.data.error == undefined) {
+          console.log(response.data)
+          localStorage.setItem("uuid", response.data[1]);
           navigate("/");
         } else {
           setRequestError(response.data.error);
