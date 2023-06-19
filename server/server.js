@@ -10,18 +10,21 @@ class UserSession {
   constructor(uuid, nickname, userid) {
     this.uuid = uuid;
     this.nickname = nickname;
-    this.userid = userid;
+    this.userId = userid;
   }
 }
 
 let userSessionActive = [];
 
-const getUserId = (_uuid)=>{
-  userSessionActive.forEach(x =>{
-    if(x.uuid== _uuid) return x.userId
-    return false;
-  })
-}
+const getUserId = (_uuid) => {
+  let i = 0;
+  userSessionActive.forEach((x) => {
+    if (x.uuid == _uuid) {
+      i = x.userId;
+    }
+  });
+  return i;
+};
 
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
@@ -36,6 +39,53 @@ const db = mysql.createPool({
 
 app.get("/", (req, res) => {
   res.send("<h2>hi</h2>");
+  db.getConnection((err, connection) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    connection.beginTransaction((err2) => {
+      if (err2) {
+        console.log(err2);
+        connection.release();
+        throw err;
+      }
+      //Your transaction logic goes here
+      connection.query(
+        "INSERT INTO workouts(name, user_id, workout_date) VALUES(?, ?, NOW())",
+        ["XD", 49],
+        (err, results) => {
+          if (err) {
+            connection.rollback(() => {
+              connection.release();
+              throw err;
+            });
+          }
+        }
+      );
+      connection.query("SELECT LAST_INSERT_ID();", (err, results) => {
+        if (err) {
+          connection.rollback(() => {
+            connection.release();
+            throw err;
+          });
+        }
+        console.log(results);
+      });
+      //
+      connection.commit((err3) => {
+        if (err3) {
+          connection.rollback(() => {
+            connection.release();
+            throw err3;
+          });
+        }
+      });
+
+      connection.release();
+      console.log("Transaction completed successfully.");
+    });
+  });
 });
 
 app.get("/redirect", (req, res) => {
@@ -108,26 +158,173 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/addworkout", async (req, res) => {
-  const userId = req.body.userId;
-  const exercises = req.body.workoutData;
-  console.log(exercises);
+  const userId = getUserId(req.body.userUuid);
+  const workoutData = req.body.workoutData;
+  const workoutName = req.body.workoutName;
+  db.getConnection((err, connection) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    connection.beginTransaction((err2) => {
+      if (err2) {
+        console.log(err2);
+        connection.release();
+        throw err;
+      }
+      //Your transaction logic goes here
+      connection.query(
+        "INSERT INTO workouts(name, user_id, workout_date) VALUES(?, ?, NOW())",
+        [workoutName, userId],
+        (err, results) => {
+          if (err) {
+            console.log(err);
+            connection.rollback(() => {
+              connection.release();
+              throw err;
+            });
+          }
+        }
+      );
+      connection.query(
+        "SET @workout_id = LAST_INSERT_ID();",
+        (err, results) => {
+          if (err) {
+            console.log(err);
+            connection.rollback(() => {
+              connection.release();
+              throw err;
+            });
+          }
+        }
+      );
+
+      workoutData.forEach((x) => {
+        connection.query(
+          "INSERT INTO exercises(workout_exercise_id, workout_id) VALUES(?,@workout_id);",
+          [x.exerciseId],
+          (err, results) => {
+            if (err) {
+              console.log(err);
+              connection.rollback(() => {
+                connection.release();
+                throw err;
+              });
+            }
+          }
+        );
+        connection.query(
+          "SET @exercise_id = LAST_INSERT_ID();",
+          [x.exerciseId],
+          (err, results) => {
+            if (err) {
+              console.log(err);
+              connection.rollback(() => {
+                connection.release();
+                throw err;
+              });
+            }
+          }
+        );
+        x.sets.forEach((y) => {
+          console.log(y.inputData.rpe);
+          connection.query(
+            "INSERT INTO sets(exercise_id, weight, reps, rpe) VALUES (@exercise_id,?,?,?);",
+            [y.inputData.weight, y.inputData.reps, y.inputData.rpe],
+            (err, results) => {
+              if (err) {
+                console.log(err);
+                connection.rollback(() => {
+                  connection.release();
+                  throw err;
+                });
+              }
+            }
+          );
+        });
+      });
+
+      connection.commit((err3) => {
+        if (err3) {
+          console.log(err3);
+          connection.rollback(() => {
+            connection.release();
+            throw err3;
+          });
+        }
+      });
+
+      connection.release();
+      console.log("Transaction completed successfully.");
+    });
+  });
+  // let sqlInsert =
+  //   `INSERT INTO workouts(name, user_id, workout_date) VALUES ("` +
+  //   workoutName +
+  //   `",` +
+  //   userId +
+  //   `,NOW());SET @workout_id = LAST_INSERT_ID();`;
+  // workoutData.forEach((x) => {
+  //   sqlInsert +=
+  //     `INSERT INTO exercises(workout_exercise_id, workout_id) VALUES (` +
+  //     x.exerciseId +
+  //     `,@workout_id);SET @exercise_id = LAST_INSERT_ID();`;
+  //   x.sets.forEach((y) => {
+  //     sqlInsert +=
+  //       `INSERT INTO sets(exercise_id, weight, reps, rpe) VALUES (@exercise_id,` +
+  //       y.inputData.weight +
+  //       `,` +
+  //       y.inputData.reps +
+  //       `,` +
+  //       y.inputData.rpe +
+  //       `);`;
+  //   });
+  // });
+  // const sqlInsert =
+  //   `START TRANSACTION;INSERT INTO workouts(name, user_id, workout_date) VALUES ("` +
+  //   workoutName +
+  //   `",` +
+  //   userId +
+  //   `,NOW()); SET @workout_id = LAST_INSERT_ID();COMMIT;`;
+  // db.query(sqlInsert, (err, result) => {
+  //   console.log(err);
+  // });
 });
 
-app.post("/getexercises", async(req, res)=>{
-  const userId = getUserId(req.body.uuid);
-  const sqlSelect = "SELECT id, name FROM workout_exercises WHERE user_id = 0 OR user_id = ?";
-  db.query(sqlSelect, [userId], async (err, result)=>{
-    console.log(result)
-    res.send(result)
-  })
-})
-
-app.post("active", (req, res) => {
-  const uuid = req.body.uuid;
-  const pos = userSessionActive.findIndex((i) => i.uuid === uuid);
-  console.log(pos);
-  res.send({ error: "Session doesn't exist" });
+app.post("/getexercises", async (req, res) => {
+  const userId = getUserId(req.body.userUuid);
+  const sqlSelect =
+    "SELECT id, name FROM workout_exercises WHERE user_id = 0 OR user_id = ?";
+  db.query(sqlSelect, [userId], async (err, result) => {
+    res.send(result);
+  });
 });
+
+app.post("/getworkouts", async (req, res) => {
+  const userId = getUserId(req.body.userUuid);
+  //SELECT * FROM questions JOIN answers ON questions.id = answers.question_id WHERE questions.quiz_id = " + quizId.ToString();
+  const sqlSelect =
+    "SELECT * FROM workouts JOIN exercises ON workouts.id = exercises.workout_id WHERE user_id = ?";
+  db.query(sqlSelect, [userId], async (err, result) => {
+    res.send(result);
+  });
+});
+
+app.post("/getLastWorkoutDate", async (req, res) => {
+  const userId = getUserId(req.body.userUuid);
+  const sqlSelect =
+    "SELECT DATE_FORMAT(workout_date,'%D %M %Y') as workout_date FROM workouts WHERE workouts.user_id = ? ORDER BY workout_date DESC LIMIT 1";
+  db.query(sqlSelect, [userId], async (err, result) => {
+    res.send(result[0].workout_date);
+  });
+});
+
+// app.post("/active", (req, res) => {
+//   const uuid = req.body.uuid;
+//   const pos = userSessionActive.findIndex((i) => i.uuid === uuid);
+//   console.log(pos);
+//   res.send({ error: "Session doesn't exist" });
+// });
 
 app.listen(3001);
 console.log("app Started on localhost:3001");

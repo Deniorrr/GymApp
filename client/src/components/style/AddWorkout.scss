@@ -1,161 +1,165 @@
 @import "../../components/style/variables.scss";
 
 button {
-	color: black;
+  color: black;
 }
 .AddWorkout {
-	h3 {
-		text-align: center;
-		font-size: 30px;
-	}
+  display: flex;
+  flex-direction: column;
+  #workoutName {
+    margin: 0 auto;
+    font-size: 30px;
+    border: 3px solid $base-color1;
+    background-color: #373b44;
+  }
 
-	.form {
-		display: flex;
-		flex-direction: column;
-		button {
-			border-radius: 10px;
-		}
-		.acceptButton {
-			border: 3px solid $base-color1;
-		}
-		.exercise {
-			display: flex;
-			flex-direction: column;
-			border-left: 5px solid $base-color1;
-			margin: 30px;
-			h4 {
-				text-align: center;
-				font-size: 25px;
-				text-transform: uppercase;
-				background-color: #6b7283;
-			}
-			table {
-				border-collapse: collapse;
-				th {
-					text-transform: uppercase;
-					padding: 10px;
-					font-size: 20px;
-				}
-				td {
-					padding: 10px;
-					text-align: center;
-					input,
-					select {
-						color: #000;
-						margin: 0 auto;
-						font-size: 20px;
-						border: 3px solid $base-color1;
-						border-radius: 10px;
-						padding: 5px;
-					}
-					input[type="number"] {
-						width: 4em;
-					}
-					option {
-						color: #333;
-					}
-					button {
-						img {
-							height: 25px;
-							margin: 5px;
-						}
-					}
-				}
-				.WorkoutSet:nth-child(even) {
-					background-color: #6b7283;
-				}
-				.confirmed:nth-child(even) {
-					background-color: #1c7a44;
-				}
-				.confirmed:nth-child(odd) {
-					background-color: #14532f;
-				}
-			}
-			.exerciseButtons {
-				display: flex;
-				justify-content: center;
-				gap: 10px;
-				margin: 10px;
-				button {
-					font-size: 20px;
-					padding: 10px;
-				}
-				.addSetButton {
-					border: 3px solid $base-color1;
-				}
-			}
-		}
-	}
-	.redButton {
-		color: #720303;
-		background-color: #e79696;
-		border: 3px solid #720303;
-		border-radius: 10px;
-	}
-	.redButton:hover {
-		background-color: #db7979;
-	}
-	.bottomButtons {
-		display: flex;
-		flex-direction: column;
-		margin: 0 auto;
-		button {
-			font-size: 20px;
-			padding: 5px 15px;
-			margin: 5px;
-		}
-		.endWorkoutButton {
-			margin-top: 20px;
-			background-color: #96e2b7;
-			transform: scale(1.3);
-		}
-	}
+  .form {
+    display: flex;
+    flex-direction: column;
+    button {
+      border-radius: 10px;
+    }
+    .acceptButton {
+      border: 3px solid $base-color1;
+    }
+    .exercise {
+      display: flex;
+      flex-direction: column;
+      border-left: 5px solid $base-color1;
+      margin: 30px;
+      h4 {
+        text-align: center;
+        font-size: 25px;
+        text-transform: uppercase;
+        background-color: #6b7283;
+      }
+      table {
+        border-collapse: collapse;
+        th {
+          text-transform: uppercase;
+          padding: 10px;
+          font-size: 20px;
+        }
+        td {
+          padding: 10px;
+          text-align: center;
+          input,
+          select {
+            color: #000;
+            margin: 0 auto;
+            font-size: 20px;
+            border: 3px solid $base-color1;
+            border-radius: 10px;
+            padding: 5px;
+          }
+          input[type="number"] {
+            width: 4em;
+          }
+          option {
+            color: #333;
+          }
+          button {
+            img {
+              height: 25px;
+              margin: 5px;
+            }
+          }
+        }
+        .WorkoutSet:nth-child(even) {
+          background-color: #6b7283;
+        }
+        .confirmed:nth-child(even) {
+          background-color: #1c7a44;
+        }
+        .confirmed:nth-child(odd) {
+          background-color: #14532f;
+        }
+      }
+      .exerciseButtons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 10px;
+        button {
+          font-size: 20px;
+          padding: 10px;
+        }
+        .addSetButton {
+          border: 3px solid $base-color1;
+        }
+      }
+    }
+  }
+  .redButton {
+    color: #720303;
+    background-color: #e79696;
+    border: 3px solid #720303;
+    border-radius: 10px;
+  }
+  .redButton:hover {
+    background-color: #db7979;
+  }
+  .bottomButtons {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    button {
+      font-size: 20px;
+      padding: 5px 15px;
+      margin: 5px;
+    }
+    .endWorkoutButton {
+      margin-top: 20px;
+      background-color: #96e2b7;
+      transform: scale(1.3);
+    }
+  }
 }
 .selectorWrapper {
-	position: fixed;
-	z-index: 2;
-	height: 100%;
-	width: 100%;
-	top: 0;
-	left: 0;
-	background-color: #00000099;
-	display: grid;
-	place-items: center;
-	img {
-		height: 40px;
-	}
-	.exerciseSelector {
-		background-color: $base-color1;
-		display: flex;
-		flex-wrap: wrap;
-		flex-direction: column;
-		.buttonWrapper {
-			align-self: flex-end;
-			.closeButton {
-				background: none;
-				border: none;
-			}
-		}
-		.exercise {
-			margin: 10px;
-			padding: 10px;
-			text-transform: uppercase;
-			display: flex;
-			align-items: center;
-			background-color: #386856;
-			p {
-				flex-basis: 80%;
-				padding: 15px;
-			}
-			button {
-				background: $base-color1;
-				border: none;
-				border-radius: 10px;
-				padding: 5px;
-			}
-			button:hover {
-				background-color: #7ff1c7;
-			}
-		}
-	}
+  position: fixed;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #00000099;
+  display: grid;
+  place-items: center;
+  img {
+    height: 40px;
+  }
+  .exerciseSelector {
+    background-color: $base-color1;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    .buttonWrapper {
+      align-self: flex-end;
+      .closeButton {
+        background: none;
+        border: none;
+      }
+    }
+    .exercise {
+      margin: 10px;
+      padding: 10px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      background-color: #386856;
+      p {
+        flex-basis: 80%;
+        padding: 15px;
+      }
+      button {
+        background: $base-color1;
+        border: none;
+        border-radius: 10px;
+        padding: 5px;
+      }
+      button:hover {
+        background-color: #7ff1c7;
+      }
+    }
+  }
 }

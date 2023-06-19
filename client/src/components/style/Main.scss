@@ -1,67 +1,67 @@
 @import "./variables.scss";
 
 .home {
-	max-width: 1000px;
-	margin: 0 auto;
-	margin-top: 120px;
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 50px;
-	a {
-		text-decoration: none;
-	}
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-top: 120px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px;
+  a {
+    text-decoration: none;
+  }
 }
 
 .mainCard {
-	transition-duration: 0.3s;
-	animation: 0.4s linear easeIn;
-	background: $base-gradient;
-	display: flex;
-	border-radius: 20px;
-	-webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-	-moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-	box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-	aside {
-		width: 30%;
-		figure {
-			transition-duration: 0.3s;
-			background-color: $base-color2;
-			margin: 20px;
-			border-radius: 20px;
-			position: relative;
-			right: 40px;
-		}
-		img {
-			max-width: 100%;
-			max-height: 100%;
-		}
-	}
-	article {
-		width: 70%;
-		text-align: center;
-		margin-left: -40px;
-		h1,
-		h3 {
-			margin-top: 20px;
-		}
-		h1 {
-			font-size: 2em;
-		}
-	}
+  transition-duration: 0.3s;
+  animation: 0.4s linear easeIn;
+  background: $base-gradient;
+  display: flex;
+  border-radius: 20px;
+  -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  aside {
+    width: 30%;
+    figure {
+      transition-duration: 0.3s;
+      background-color: $base-color2;
+      margin: 20px;
+      border-radius: 20px;
+      position: relative;
+      right: 40px;
+    }
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+  article {
+    width: 70%;
+    text-align: center;
+    margin-left: -40px;
+    h1,
+    h3 {
+      margin-top: 20px;
+    }
+    h1 {
+      font-size: 2em;
+    }
+  }
 }
 .mainCard:hover {
-	figure {
-		transform: translateX(50px);
-	}
-	cursor: pointer;
-	transform: scale(1.1);
+  figure {
+    transform: translateX(40px);
+  }
+  cursor: pointer;
+  transform: scale(1.1);
 }
 
 @keyframes easeIn {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
