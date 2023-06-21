@@ -37,56 +37,56 @@ const db = mysql.createPool({
   database: "gymapp",
 });
 
-app.get("/", (req, res) => {
-  res.send("<h2>hi</h2>");
-  db.getConnection((err, connection) => {
-    if (err) {
-      console.log(err);
-      throw err;
-    }
-    connection.beginTransaction((err2) => {
-      if (err2) {
-        console.log(err2);
-        connection.release();
-        throw err;
-      }
-      //Your transaction logic goes here
-      connection.query(
-        "INSERT INTO workouts(name, user_id, workout_date) VALUES(?, ?, NOW())",
-        ["XD", 49],
-        (err, results) => {
-          if (err) {
-            connection.rollback(() => {
-              connection.release();
-              throw err;
-            });
-          }
-        }
-      );
-      connection.query("SELECT LAST_INSERT_ID();", (err, results) => {
-        if (err) {
-          connection.rollback(() => {
-            connection.release();
-            throw err;
-          });
-        }
-        console.log(results);
-      });
-      //
-      connection.commit((err3) => {
-        if (err3) {
-          connection.rollback(() => {
-            connection.release();
-            throw err3;
-          });
-        }
-      });
+// app.get("/", (req, res) => {
+//   res.send("<h2>hi</h2>");
+//   db.getConnection((err, connection) => {
+//     if (err) {
+//       console.log(err);
+//       throw err;
+//     }
+//     connection.beginTransaction((err2) => {
+//       if (err2) {
+//         console.log(err2);
+//         connection.release();
+//         throw err;
+//       }
+//       //Your transaction logic goes here
+//       connection.query(
+//         "INSERT INTO workouts(name, user_id, workout_date) VALUES(?, ?, NOW())",
+//         ["XD", 49],
+//         (err, results) => {
+//           if (err) {
+//             connection.rollback(() => {
+//               connection.release();
+//               throw err;
+//             });
+//           }
+//         }
+//       );
+//       connection.query("SELECT LAST_INSERT_ID();", (err, results) => {
+//         if (err) {
+//           connection.rollback(() => {
+//             connection.release();
+//             throw err;
+//           });
+//         }
+//         console.log(results);
+//       });
+//       //
+//       connection.commit((err3) => {
+//         if (err3) {
+//           connection.rollback(() => {
+//             connection.release();
+//             throw err3;
+//           });
+//         }
+//       });
 
-      connection.release();
-      console.log("Transaction completed successfully.");
-    });
-  });
-});
+//       connection.release();
+//       console.log("Transaction completed successfully.");
+//     });
+//   });
+// });
 
 app.get("/redirect", (req, res) => {
   res.redirect("https://example.com");
@@ -108,7 +108,6 @@ app.post("/register", async (req, res) => {
       const sqlSelect = "SELECT * FROM users WHERE username = ? OR email = ?";
       db.query(sqlSelect, [username, email], (err, result) => {
         if (result.length > 0) {
-          console.log(result);
           if (result[0].username == username) {
             res.send({ error: "Username is taken!" });
           } else {
@@ -121,7 +120,6 @@ app.post("/register", async (req, res) => {
             sqlInsert,
             [username, email, hashedPassword],
             (err, result) => {
-              console.log("not taken");
               res.status(201).send("ok");
             }
           );
@@ -227,7 +225,6 @@ app.post("/addworkout", async (req, res) => {
           }
         );
         x.sets.forEach((y) => {
-          console.log(y.inputData.rpe);
           connection.query(
             "INSERT INTO sets(exercise_id, weight, reps, rpe) VALUES (@exercise_id,?,?,?);",
             [y.inputData.weight, y.inputData.reps, y.inputData.rpe],
@@ -300,11 +297,10 @@ app.post("/getexercises", async (req, res) => {
   });
 });
 
-app.post("/getworkouts", async (req, res) => {
+app.post("/getWorkouts", async (req, res) => {
   const userId = getUserId(req.body.userUuid);
-  //SELECT * FROM questions JOIN answers ON questions.id = answers.question_id WHERE questions.quiz_id = " + quizId.ToString();
   const sqlSelect =
-    "SELECT * FROM workouts JOIN exercises ON workouts.id = exercises.workout_id WHERE user_id = ?";
+    "SELECT workout_exercises.name as exercise_name, workouts.*,DATE_FORMAT(workout_date,'%D %M %Y') as wdate, DATE_FORMAT(workout_date,'%H:%i %D %M %Y') as wdate2, exercises.id as eid, COUNT(sets.id) as ecount FROM workouts JOIN exercises ON workouts.id = exercises.workout_id JOIN workout_exercises ON exercises.workout_exercise_id = workout_exercises.id JOIN sets ON exercises.id = sets.exercise_id WHERE workouts.user_id = ? GROUP BY exercises.id ORDER BY workouts.workout_date DESC;";
   db.query(sqlSelect, [userId], async (err, result) => {
     res.send(result);
   });
@@ -315,7 +311,18 @@ app.post("/getLastWorkoutDate", async (req, res) => {
   const sqlSelect =
     "SELECT DATE_FORMAT(workout_date,'%D %M %Y') as workout_date FROM workouts WHERE workouts.user_id = ? ORDER BY workout_date DESC LIMIT 1";
   db.query(sqlSelect, [userId], async (err, result) => {
+    console.log(err);
     res.send(result[0].workout_date);
+  });
+});
+
+app.post("/getFullWorkout", async (req, res) => {
+  const userId = getUserId(req.body.userUuid);
+  const workoutId = req.body.workoutId;
+  const sqlSelect =
+    "SELECT * FROM exercises JOIN sets ON exercises.id = sets.exercise_id JOIN workout_exercises ON exercises.workout_exercise_id = workout_exercises.id WHERE exercises.workout_id = ?;";
+  db.query(sqlSelect, [workoutId], async (err, result) => {
+    res.send(result);
   });
 });
 

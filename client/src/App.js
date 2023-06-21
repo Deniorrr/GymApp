@@ -8,21 +8,21 @@ import Login from "./components/Login";
 import "./App.scss";
 
 function App() {
-	return (
-		<div>
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<Navbar />}>
-						<Route path="/" element={<Main />} />
-						<Route path="profile" element={<Profile />} />
-						<Route path="newWorkout" element={<AddWorkout />} />
-					</Route>
-					<Route path="register" element={<Register />} />
-					<Route path="login" element={<Login />} />
-				</Routes>
-			</BrowserRouter>
-		</div>
-	);
+  return (
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navbar />}>
+            <Route path="/" element={<Main />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="newWorkout" element={<AddWorkout />} />
+          </Route>
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;

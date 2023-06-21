@@ -29,3 +29,9 @@ CREATE TABLE sets(
     reps int,
     rpe float
 );
+
+SELECT workout_exercises.name, workouts.*, exercises.id as eid, COUNT(sets.id) FROM workouts
+JOIN exercises ON workouts.id = exercises.workout_id
+JOIN workout_exercises ON exercises.workout_exercise_id = workout_exercises.id
+JOIN sets ON exercises.id = sets.exercise_id
+WHERE workouts.user_id = 49 GROUP BY exercises.id ORDER BY workouts.id;

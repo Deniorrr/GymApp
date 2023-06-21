@@ -27,7 +27,6 @@ function AddWorkout() {
       })
       .then((response) => {
         response.data.forEach((x) => {
-          console.log({ key: x.id, name: x.name });
           setExerciseList((y) => [...y, { key: x.id, name: x.name }]);
         });
       });
