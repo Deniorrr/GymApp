@@ -10,6 +10,14 @@
   a {
     text-decoration: none;
   }
+  .trzeci {
+    grid-column: 1 / 3;
+    a {
+      display: block;
+      margin: 0 25%;
+      width: 50%;
+    }
+  }
 }
 
 .mainCard {
@@ -64,4 +72,14 @@
   to {
     opacity: 1;
   }
+}
+
+footer {
+  background-color: $base-color2;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  font-size: 18px;
 }

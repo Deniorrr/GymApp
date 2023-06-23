@@ -1,0 +1,44 @@
+@import "./variables.scss";
+
+#addExercise {
+  width: 800px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  justify-items: center;
+  .list {
+    ul {
+      margin: 20px;
+      li {
+        font-size: 20px;
+        padding: 3px;
+      }
+    }
+    li:nth-of-type(even) {
+      background-color: #ffffff22;
+    }
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    input {
+      border: 3px solid $base-color1;
+      font-size: 20px;
+      padding: 4px;
+      margin: 10px 0;
+      width: 100%;
+      color: #000;
+    }
+    button {
+      background-color: $base-color2;
+      color: white;
+      padding: 10px;
+      border: 3px solid $base-color1;
+      font-size: 20px;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #505050;
+    }
+  }
+}

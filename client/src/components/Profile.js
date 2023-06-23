@@ -4,7 +4,9 @@ import ProfileWorkout from "./ProfileWorkout";
 import axios from "axios";
 import BackButton from "./BackButton";
 import ProfileFullWorkout from "./ProfileFullWorkout";
+import { useNavigate } from "react-router-dom";
 function Profile() {
+  const navigate = useNavigate();
   const [workoutslist, setworkoutslist] = useState([]);
   const [displayWorkout, setDisplayWorkout] = useState(false);
   const [fullWorkoutElements, setFullWorkoutElements] = useState();
@@ -15,6 +17,9 @@ function Profile() {
       })
       .then((response) => {
         generateWorkoutState(response.data);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) navigate("/login");
       });
   };
 
@@ -44,7 +49,6 @@ function Profile() {
         });
       }
     });
-    console.log(workouts);
     setworkoutslist(workouts);
   };
   useEffect(getWorkouts, []);
@@ -67,7 +71,6 @@ function Profile() {
   };
 
   const renderFullWorkout = (workout) => {
-    console.log(workout);
     setFullWorkoutElements(
       <ProfileFullWorkout
         data={workout}

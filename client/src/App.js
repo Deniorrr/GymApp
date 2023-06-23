@@ -4,7 +4,10 @@ import Main from "./components/Main";
 import Profile from "./components/Profile";
 import AddWorkout from "./components/AddWorkout";
 import Register from "./components/Register";
+import AddExercise from "./components/AddExercise";
 import Login from "./components/Login";
+import About from "./components/About";
+
 import "./App.scss";
 
 function App() {
@@ -16,6 +19,8 @@ function App() {
             <Route path="/" element={<Main />} />
             <Route path="profile" element={<Profile />} />
             <Route path="newWorkout" element={<AddWorkout />} />
+            <Route path="addExercise" element={<AddExercise />} />
+            <Route path="about" element={<About />} />
           </Route>
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />

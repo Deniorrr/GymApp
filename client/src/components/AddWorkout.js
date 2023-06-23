@@ -4,6 +4,7 @@ import BackButton from "./BackButton";
 import WorkoutExercise from "./WorkoutExercise";
 import ExerciseSelector from "./ExerciseSelector";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AddWorkout() {
   const [exercises, setExercises] = useState([]);
@@ -11,13 +12,9 @@ function AddWorkout() {
   const [displayExerciseList, setDisplayExerciseList] = useState(true);
   const [exerciseCount, setExerciseCount] = useState(0);
   const [exerciseList, setExerciseList] = useState([]);
+  const navigate = useNavigate();
   const displayExerciseSelector = () => {
     setDisplayExerciseList(true);
-    //
-    // setExercises(
-    // 	[...exercises, { id: exerciseCount, sets: [] }],
-    // 	setExerciseCount(exerciseCount + 1)
-    // );
   };
 
   const getExercisesFromDB = () => {
@@ -29,6 +26,9 @@ function AddWorkout() {
         response.data.forEach((x) => {
           setExerciseList((y) => [...y, { key: x.id, name: x.name }]);
         });
+      })
+      .catch((error) => {
+        if (error.response.status === 401) navigate("/login");
       });
   };
   useEffect(() => {
@@ -38,7 +38,6 @@ function AddWorkout() {
     setDisplayExerciseList(false);
   };
   const addExerciseToForm = (exercise) => {
-    console.log(exercise);
     setExercises(
       [
         ...exercises,
@@ -111,12 +110,15 @@ function AddWorkout() {
   // };
 
   const submitData = () => {
-    console.log(exercises);
-    axios.post("http://localhost:3001/addworkout", {
-      userUuid: localStorage.getItem("uuid"),
-      workoutName: workoutName,
-      workoutData: exercises,
-    });
+    axios
+      .post("http://localhost:3001/addworkout", {
+        userUuid: localStorage.getItem("uuid"),
+        workoutName: workoutName,
+        workoutData: exercises,
+      })
+      .then((response) => {
+        navigate("/");
+      });
     // .then((response) => {
     // 	if (response.data.error == undefined) {
     // 		navigate("/login");
@@ -157,7 +159,14 @@ function AddWorkout() {
               Add exercise
             </button>
 
-            <button className="redButton">Cancel workout</button>
+            <button
+              className="redButton"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Cancel workout
+            </button>
 
             <button
               className="acceptButton endWorkoutButton"

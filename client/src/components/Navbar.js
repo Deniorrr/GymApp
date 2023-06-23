@@ -8,12 +8,13 @@ import { useNavigate } from "react-router-dom";
 export default function Navbar() {
   const navigate = useNavigate();
   const logout = () => {
+    localStorage.setItem("uuid", "ok");
     navigate("/login");
   };
   return (
     <>
       <nav>
-        <aside>
+        <aside onClick={() => navigate("/")}>
           <img src={logo} alt="logo" />
           <h1>Gym App</h1>
         </aside>

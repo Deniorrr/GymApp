@@ -17,7 +17,7 @@ class UserSession {
 let userSessionActive = [];
 
 const getUserId = (_uuid) => {
-  let i = 0;
+  let i = -1;
   userSessionActive.forEach((x) => {
     if (x.uuid == _uuid) {
       i = x.userId;
@@ -36,57 +36,6 @@ const db = mysql.createPool({
   password: "",
   database: "gymapp",
 });
-
-// app.get("/", (req, res) => {
-//   res.send("<h2>hi</h2>");
-//   db.getConnection((err, connection) => {
-//     if (err) {
-//       console.log(err);
-//       throw err;
-//     }
-//     connection.beginTransaction((err2) => {
-//       if (err2) {
-//         console.log(err2);
-//         connection.release();
-//         throw err;
-//       }
-//       //Your transaction logic goes here
-//       connection.query(
-//         "INSERT INTO workouts(name, user_id, workout_date) VALUES(?, ?, NOW())",
-//         ["XD", 49],
-//         (err, results) => {
-//           if (err) {
-//             connection.rollback(() => {
-//               connection.release();
-//               throw err;
-//             });
-//           }
-//         }
-//       );
-//       connection.query("SELECT LAST_INSERT_ID();", (err, results) => {
-//         if (err) {
-//           connection.rollback(() => {
-//             connection.release();
-//             throw err;
-//           });
-//         }
-//         console.log(results);
-//       });
-//       //
-//       connection.commit((err3) => {
-//         if (err3) {
-//           connection.rollback(() => {
-//             connection.release();
-//             throw err3;
-//           });
-//         }
-//       });
-
-//       connection.release();
-//       console.log("Transaction completed successfully.");
-//     });
-//   });
-// });
 
 app.get("/redirect", (req, res) => {
   res.redirect("https://example.com");
@@ -161,7 +110,6 @@ app.post("/addworkout", async (req, res) => {
   const workoutName = req.body.workoutName;
   db.getConnection((err, connection) => {
     if (err) {
-      console.log(err);
       throw err;
     }
     connection.beginTransaction((err2) => {
@@ -255,43 +203,14 @@ app.post("/addworkout", async (req, res) => {
       console.log("Transaction completed successfully.");
     });
   });
-  // let sqlInsert =
-  //   `INSERT INTO workouts(name, user_id, workout_date) VALUES ("` +
-  //   workoutName +
-  //   `",` +
-  //   userId +
-  //   `,NOW());SET @workout_id = LAST_INSERT_ID();`;
-  // workoutData.forEach((x) => {
-  //   sqlInsert +=
-  //     `INSERT INTO exercises(workout_exercise_id, workout_id) VALUES (` +
-  //     x.exerciseId +
-  //     `,@workout_id);SET @exercise_id = LAST_INSERT_ID();`;
-  //   x.sets.forEach((y) => {
-  //     sqlInsert +=
-  //       `INSERT INTO sets(exercise_id, weight, reps, rpe) VALUES (@exercise_id,` +
-  //       y.inputData.weight +
-  //       `,` +
-  //       y.inputData.reps +
-  //       `,` +
-  //       y.inputData.rpe +
-  //       `);`;
-  //   });
-  // });
-  // const sqlInsert =
-  //   `START TRANSACTION;INSERT INTO workouts(name, user_id, workout_date) VALUES ("` +
-  //   workoutName +
-  //   `",` +
-  //   userId +
-  //   `,NOW()); SET @workout_id = LAST_INSERT_ID();COMMIT;`;
-  // db.query(sqlInsert, (err, result) => {
-  //   console.log(err);
-  // });
+  res.send("ok");
 });
 
 app.post("/getexercises", async (req, res) => {
   const userId = getUserId(req.body.userUuid);
+  if (userId == -1) return res.send(401);
   const sqlSelect =
-    "SELECT id, name FROM workout_exercises WHERE user_id = 0 OR user_id = ?";
+    "SELECT id, name, user_id FROM workout_exercises WHERE user_id = 0 OR user_id = ?";
   db.query(sqlSelect, [userId], async (err, result) => {
     res.send(result);
   });
@@ -299,6 +218,7 @@ app.post("/getexercises", async (req, res) => {
 
 app.post("/getWorkouts", async (req, res) => {
   const userId = getUserId(req.body.userUuid);
+  if (userId == -1) return res.send(401);
   const sqlSelect =
     "SELECT workout_exercises.name as exercise_name, workouts.*,DATE_FORMAT(workout_date,'%D %M %Y') as wdate, DATE_FORMAT(workout_date,'%H:%i %D %M %Y') as wdate2, exercises.id as eid, COUNT(sets.id) as ecount FROM workouts JOIN exercises ON workouts.id = exercises.workout_id JOIN workout_exercises ON exercises.workout_exercise_id = workout_exercises.id JOIN sets ON exercises.id = sets.exercise_id WHERE workouts.user_id = ? GROUP BY exercises.id ORDER BY workouts.workout_date DESC;";
   db.query(sqlSelect, [userId], async (err, result) => {
@@ -308,30 +228,105 @@ app.post("/getWorkouts", async (req, res) => {
 
 app.post("/getLastWorkoutDate", async (req, res) => {
   const userId = getUserId(req.body.userUuid);
+  if (userId == -1) return res.send(401);
   const sqlSelect =
     "SELECT DATE_FORMAT(workout_date,'%D %M %Y') as workout_date FROM workouts WHERE workouts.user_id = ? ORDER BY workout_date DESC LIMIT 1";
   db.query(sqlSelect, [userId], async (err, result) => {
-    console.log(err);
     res.send(result[0].workout_date);
   });
 });
 
 app.post("/getFullWorkout", async (req, res) => {
   const userId = getUserId(req.body.userUuid);
+  if (userId == -1) return res.send(401);
   const workoutId = req.body.workoutId;
   const sqlSelect =
-    "SELECT * FROM exercises JOIN sets ON exercises.id = sets.exercise_id JOIN workout_exercises ON exercises.workout_exercise_id = workout_exercises.id WHERE exercises.workout_id = ?;";
+    "SELECT *, sets.id as set_id FROM exercises JOIN sets ON exercises.id = sets.exercise_id JOIN workout_exercises ON exercises.workout_exercise_id = workout_exercises.id WHERE exercises.workout_id = ?;";
   db.query(sqlSelect, [workoutId], async (err, result) => {
     res.send(result);
   });
 });
 
-// app.post("/active", (req, res) => {
-//   const uuid = req.body.uuid;
-//   const pos = userSessionActive.findIndex((i) => i.uuid === uuid);
-//   console.log(pos);
-//   res.send({ error: "Session doesn't exist" });
-// });
+app.post("/addExercise", async (req, res) => {
+  const userId = getUserId(req.body.userUuid);
+  if (userId == -1) return res.send(401);
+  const exerciseName = req.body.exerciseName;
+  const sqlSelect = "INSERT INTO workout_exercises(name,user_id) VALUES (?,?)";
+  db.query(sqlSelect, [exerciseName, userId], async (err, result) => {
+    res.send(result);
+  });
+});
+
+app.post("/deleteWorkout", (req, res) => {
+  const userId = getUserId(req.body.userUuid);
+  if (userId == -1) return res.send(401);
+  const workoutId = req.body.workoutId;
+  db.getConnection((err, connection) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    connection.beginTransaction((err2) => {
+      if (err2) {
+        console.log(err2);
+        connection.release();
+        throw err;
+      }
+      //Your transaction logic goes here
+      connection.query(
+        "DELETE sets FROM sets, exercises WHERE exercises.id = sets.exercise_id AND exercises.workout_id = ?",
+        [workoutId],
+        (err, results) => {
+          if (err) {
+            console.log(err);
+            connection.rollback(() => {
+              connection.release();
+              throw err;
+            });
+          }
+        }
+      );
+      connection.query(
+        "DELETE FROM exercises WHERE exercises.workout_id = ?",
+        [workoutId],
+        (err, results) => {
+          if (err) {
+            console.log(err);
+            connection.rollback(() => {
+              connection.release();
+              throw err;
+            });
+          }
+        }
+      );
+      connection.query(
+        "DELETE FROM workouts WHERE workouts.id = ?",
+        [workoutId],
+        (err, results) => {
+          if (err) {
+            console.log(err);
+            connection.rollback(() => {
+              connection.release();
+              throw err;
+            });
+          }
+        }
+      );
+      connection.commit((err3) => {
+        if (err3) {
+          console.log(err3);
+          connection.rollback(() => {
+            connection.release();
+            throw err3;
+          });
+        }
+      });
+      connection.release();
+      console.log("Transaction completed successfully.");
+    });
+  });
+  res.send("OK");
+});
 
 app.listen(3001);
 console.log("app Started on localhost:3001");
