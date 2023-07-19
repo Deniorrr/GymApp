@@ -18,17 +18,6 @@ export default function Navbar() {
           <img src={logo} alt="logo" />
           <h1>Gym App</h1>
         </aside>
-        {/* <ul>
-				<li>
-				<a href="/">asd</a>
-				</li>
-				<li>
-				<a href="/">asd</a>
-				</li>
-				<li>
-				<a href="/">asd</a>
-				</li>
-			</ul> */}
         <div id="logout">
           <button onClick={() => logout()}>
             <img src={logoutIcon} alt="Logout" />

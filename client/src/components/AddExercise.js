@@ -26,7 +26,6 @@ function AddExercise() {
   }, []);
 
   const addExercise = () => {
-    console.log(exerciseInput);
     axios
       .post("http://localhost:3001/addExercise", {
         userUuid: localStorage.getItem("uuid"),

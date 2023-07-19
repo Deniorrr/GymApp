@@ -14,7 +14,6 @@ function ProfileFullWorkout(props) {
         workoutId: data.id,
       })
       .then((response) => {
-        console.log(response.data);
         generateWorkoutState(response.data);
       });
   };

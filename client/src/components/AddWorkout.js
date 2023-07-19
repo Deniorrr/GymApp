@@ -67,11 +67,10 @@ function AddWorkout() {
         }
       })
     );
-    console.log("data added");
   };
   const deleteSet = (id, exerciseId) => {
     let exerciseCopy = exercises.find((x) => x.id === exerciseId);
-    delete exerciseCopy.sets[id];
+    exerciseCopy.sets.splice(id, 1);
     setExercises(
       exercises.map((x) => {
         if (x.id !== exerciseId) {
@@ -101,15 +100,8 @@ function AddWorkout() {
     return elements;
   };
 
-  // const editableTitle = useRef(null);
-
-  // const handleKeyPress = (event) => {
-  // 	if (event.key === "Enter") {
-  // 		editableTitle.current.blur();
-  // 	}
-  // };
-
   const submitData = () => {
+    console.log(exercises);
     axios
       .post("http://localhost:3001/addworkout", {
         userUuid: localStorage.getItem("uuid"),
@@ -119,16 +111,6 @@ function AddWorkout() {
       .then((response) => {
         navigate("/");
       });
-    // .then((response) => {
-    // 	if (response.data.error == undefined) {
-    // 		navigate("/login");
-    // 	} else {
-    // 		setRequestError(response.data.error);
-    // 	}
-    // })
-    // .catch((error) => {
-    // 	console.log(error);
-    // });
   };
   return (
     <>

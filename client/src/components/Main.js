@@ -5,6 +5,8 @@ import axios from "axios";
 import "./style/Main.scss";
 import history from "../assets/history.png";
 import plus from "../assets/plusSymbol.png";
+import list from "../assets/list.png";
+import info from "../assets/info.png";
 import { useNavigate } from "react-router-dom";
 function Main() {
   const [lastWorkoutDate, setLastWorkoutDate] = useState("");
@@ -40,18 +42,16 @@ function Main() {
             image={history}
           />
         </NavLink>
-        <div className="trzeci">
-          <NavLink to="/AddExercise">
-            <MainCard
-              header="Add exercise"
-              subHeader="Add yor custom exercise"
-              image={plus}
-            />
-          </NavLink>
-        </div>
-        {/* <NavLink to="/about">
-          <MainCard header="About" subHeader="App description" />
-        </NavLink> */}
+        <NavLink to="/AddExercise">
+          <MainCard
+            header="Add exercise"
+            subHeader="Add yor custom exercise"
+            image={list}
+          />
+        </NavLink>
+        <NavLink to="/about">
+          <MainCard header="About" subHeader="App description" image={info} />
+        </NavLink>
       </main>
       <footer>&copy; Denis Poczęty 2023</footer>
     </>
